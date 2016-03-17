@@ -69,19 +69,19 @@
         <source-file src="src/ios/lib/UMSocial_Sdk_5.0/SocialSDKXib/UMSLoginViewController.xib"/>
         <source-file src="src/ios/lib/UMSocial_Sdk_5.0/SocialSDKXib/UMSShareListController.xib"/>
 
-        <source-file src="src/ios/libs/UMSocial_Sdk_5.0/en.lproj/UMSocialLocalizable.strings" />
-        <source-file src="src/ios/libs/UMSocial_Sdk_5.0/zh-Hans.lproj/UMSocialLocalizable.strings" />
-        <source-file src="src/ios/libs/WeChatSDK_1.6.1/UMSocialSDKResourcesNew.bundle" />
-        <source-file src="src/ios/libs/UMSocial_Sdk_5.0/libUMSocial_Sdk_5.0.a" framework="true" />
+        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/en.lproj" />
+        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/zh-Hans.lproj" />
+        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/UMSocialSDKResourcesNew.bundle" />
+        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/libUMSocial_Sdk_5.0.a" framework="true" />
         
         <!--        WeChatSDK-->
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChatSDK/libSocialWechat.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChatSDK/UMSocialWechatHandler.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChatSDK/WechatAuthSDK.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChatSDK/WXApi.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChatSDK/WXApiObject.h"/>
+        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/UMSocialWechatHandler.h"/>
+        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/WechatAuthSDK.h"/>
+        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/WXApi.h"/>
+        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/WXApiObject.h"/>
 
-        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChatSDK/libWeChatSDK.a" framework="true" />
+        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/libSocialWechat.a" framework="true" />
+        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/libWeChatSDK.a"/>
         
         <!--        SinaSSO-->
         <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/UMSocialSinaSSOHandler.h"/>
@@ -115,7 +115,54 @@
         <source-file src="src/ios/frame/SystemConfiguration.framework" framework="true" />
         <source-file src="src/ios/frame/libsqlite3.tbd" framework="true" />
         
-	</platform>
+        <!-- 添加URL Type 需要用户自己修改 懒得弄... -->
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>wxa2e2ce8a3180bed1</string>
+                    </array>
+                </dict>
+                
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>QQ41DAB367</string>
+                    </array>
+                </dict>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>tencent1104851815</string>
+                    </array>
+                </dict>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>wb1399888483</string>
+                    </array>
+                </dict>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>sina.56ea4f1867e58e4242001361</string>
+                    </array>
+                </dict>
+            </array>
+        </config-file>
+
+     </platform>
 
 
 </plugin>
