@@ -37,6 +37,7 @@ public class dmwechat extends CordovaPlugin {
 
         // login
         // type:wechat sina tecent
+        // return: args.access_token args.userid
         if (action.equals("login")) {
             String type = args.getString(0);
             this.login(type, callbackContext);

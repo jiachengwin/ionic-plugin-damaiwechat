@@ -22,6 +22,7 @@ var dmwechat = {
 
     // login 
     // type:wechat sina tecent
+    // return: args.access_token args.userid xxxx xxxx
     login: function(type, success, error) {
         exec(success, error, "dmwechat", "login", [type]);
     },

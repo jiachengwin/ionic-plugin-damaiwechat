@@ -1,10 +1,12 @@
 /********* dmwechat.m Cordova Plugin Implementation *******/
 
 #import <Cordova/CDV.h>
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialQQHandler.h"
+#import "UMSocialSinaSSOHandler.h"
 
-@interface dmwechat : CDVPlugin {
-  // Member variables go here.
-}
+@interface dmwechat : CDVPlugin <UMSocialUIDelegate>
 
 - (void)echo:(CDVInvokedUrlCommand*)command;
 - (void)init:(CDVInvokedUrlCommand*)command;
@@ -31,14 +33,39 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+// 目前只接入了三种平台的认证登陆
 - (void)init:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = nil;
-    NSDictionary* dic = [command.arguments objectAtIndex:0];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"success"];
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+    if (params) {
+        //设置友盟社会化组件appkey,如果要修改的话，手动改插件...包括下面的回调URL...
+        [UMSocialData setAppKey:@"56ea4f1867e58e4242001361"];
+        
+        //设置微信AppId，设置分享url，默认使用友盟的网址
+        if (params[@"wechatKey"] && params[@"wechatSecret"]) {
+            [UMSocialWechatHandler setWXAppId:params[@"wechatKey"] appSecret:params[@"wechatSecret"] url:@"http://www.umeng.com/social"];
+        }
+        
+        // 打开新浪微博的SSO开关
+        // 将在新浪微博注册的应用appkey、redirectURL替换下面参数，并在info.plist的URL Scheme中相应添加wb+appkey，如"wb3921700954"，详情请参考官方文档。
+        if (params[@"sinaKey"] && params[@"sinaSecret"]) {
+            [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:params[@"sinaKey"]
+                                                      secret:params[@"sinaSecret"]
+                                                 RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+        }
+        
+        //    //设置分享到QQ空间的应用Id，和分享url 链接
+        if (params[@"tecentKey"] && params[@"tecentSecret"]) {
+            [UMSocialQQHandler setQQWithAppId:params[@"tecentKey"]
+                                       appKey:params[@"tecentKey"]
+                                          url:@"http://www.umeng.com/social"];
+            [UMSocialQQHandler setSupportWebView:YES];
+        }
+        
+        // 处理回调URL
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:CDVPluginHandleOpenURLNotification object:nil];
 
-    if (dic) {
-    	message = @"来自iOS的消息......";
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:message];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
@@ -48,17 +75,44 @@
 
 - (void)login:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = nil;
-    NSDictionary* dic = [command.arguments objectAtIndex:0];
-
-    if (dic) {
-    	message = @"来自iOS的消息......";
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:message];
+    NSString* platformName = [command.arguments objectAtIndex:0];
+    if ([platformName isEqualToString:@"wechat"]) {
+        platformName = @"wxsession";
+    } else if ([platformName isEqualToString:@"tencent"]) {
+        platformName = @"qq";
+    } else if ([platformName isEqualToString:@"sina"]) {
+        platformName = @"sina";
     } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+        platformName = @"";
     }
-
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    if (![platformName isEqualToString:@""]) {
+        [UMSocialControllerService defaultControllerService].socialUIDelegate = self;
+        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:platformName];
+        snsPlatform.loginClickHandler(self.viewController, [UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
+            // 获取微博用户名、uid、token等
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:platformName];
+                NSDictionary *res = @{@"access_token":snsAccount.accessToken,
+                        @"userid":snsAccount.usid,
+                        @"username":snsAccount.userName,
+                        @"icon":snsAccount.iconURL};
+                CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:res];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+            // 这里可以获取到腾讯微博openid,Qzone的token等
+            if ([platformName isEqualToString:UMShareToTencent]) {
+                [[UMSocialDataService defaultDataService] requestSnsInformation:UMShareToTencent completion:^(UMSocialResponseEntity *respose){
+                    NSDictionary *res = @{@"access_token": response};
+                    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:res];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }];
+            }
+        });
+        
+    } else {
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }
 }
 
 - (void)wechatPay:(CDVInvokedUrlCommand*)command
@@ -67,7 +121,7 @@
     NSDictionary* dic = [command.arguments objectAtIndex:0];
 
     if (dic) {
-    	message = @"来自iOS的消息......";
+    	NSString *message = @"来自iOS的消息......";
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:message];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
@@ -82,13 +136,18 @@
     NSDictionary* dic = [command.arguments objectAtIndex:0];
 
     if (dic) {
-    	message = @"来自iOS的消息......";
+    	NSString *message = @"来自iOS的消息......";
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:message];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+// handle the notification from ionic
+- (void)handleNotification:(NSNotification *)noti {
+    [UMSocialSnsService handleOpenURL:noti.object wxApiDelegate:nil];
 }
 
 @end
