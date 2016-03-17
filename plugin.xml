@@ -16,10 +16,9 @@
 	</platform>
 
 	<platform name="ios">
-		<config-file parent="/*" target="config.xml">
-			<feature name="dmwechat"><param name="ios-package" value="dmwechat" /></feature>
-		</config-file>
-		<source-file src="src/ios/dmwechat.m" />
+            <config-file parent="/*" target="config.xml">
+                <feature name="dmwechat"><param name="ios-package" value="dmwechat" /></feature>
+	    </config-file>
 
 	    <!-- 添加回调注册Target -->
 	    <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
