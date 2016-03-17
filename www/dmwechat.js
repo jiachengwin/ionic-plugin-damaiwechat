@@ -20,6 +20,17 @@ var dmwechat = {
         exec(success, error, "dmwechat", "init", [params]);
     },
 
+    // share
+    // type: sina wechat tencent
+    // var data = {
+    //     "title" : "",
+    //     "content" : "",
+    //     "imgUrl" : ""
+    // }
+    share: function(type, data, success, error) {
+        exec(success, error, "dmwechat", "share", [type, data]);
+    },
+
     // login 
     // type:wechat sina tecent
     // return: args.access_token args.userid xxxx xxxx
