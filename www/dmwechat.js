@@ -18,7 +18,7 @@ var dmwechat = {
     // }
     init: function(params, success, error) {
         exec(success, error, "dmwechat", "init", [params]);
-    }
+    },
 
     // login 
     // type:wechat sina tecent
@@ -37,7 +37,7 @@ var dmwechat = {
     wechatPay: function(params, success, error) {
         exec(success, error, "dmwechat", "wechatPay", [params]);
     },
-    
+
     aliPay: function(params, success, error) {
         exec(success, error, "dmwechat", "aliPay", [params]);
     }
