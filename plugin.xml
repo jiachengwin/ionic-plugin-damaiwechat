@@ -1,2 +1,22 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com.damai.damaiwechat" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"><name>dmwechat</name><js-module name="dmwechat" src="www/dmwechat.js"><clobbers target="cordova.plugins.dmwechat" /></js-module><platform name="android"><config-file parent="/*" target="res/xml/config.xml"><feature name="dmwechat"><param name="android-package" value="com.damai.damaiwechat.dmwechat" /></feature></config-file><config-file parent="/*" target="AndroidManifest.xml" /><source-file src="src/android/dmwechat.java" target-dir="src/com/damai/damaiwechat/dmwechat" /></platform><platform name="ios"><config-file parent="/*" target="config.xml"><feature name="dmwechat"><param name="ios-package" value="dmwechat" /></feature></config-file><source-file src="src/ios/dmwechat.m" /></platform></plugin>
+<plugin id="com.damai.damaiwechat" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>dmwechat</name>
+	<js-module name="dmwechat" src="www/dmwechat.js">
+		<clobbers target="cordova.plugins.dmwechat" />
+	</js-module>
+	<platform name="android">
+		<config-file parent="/*" target="res/xml/config.xml">
+			<feature name="dmwechat">
+				<param name="android-package" value="com.damai.damaiwechat.dmwechat" />
+			</feature>
+		</config-file>
+		<config-file parent="/*" target="AndroidManifest.xml" />
+		<source-file src="src/android/dmwechat.java" target-dir="src/com/damai/damaiwechat/dmwechat" />
+	</platform>
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="dmwechat"><param name="ios-package" value="dmwechat" /></feature>
+		</config-file>
+		<source-file src="src/ios/dmwechat.m" />
+	</platform>
+</plugin>
