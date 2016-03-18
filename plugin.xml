@@ -31,6 +31,8 @@
 	            <string>weibosdk</string>
 	            <string>weibosdk2.5</string>
 	            <string>sqqapi</string>
+                <string>mqq</string>
+                <string>mqqapi</string>
 	            <string>mqqOpensdkSSologin</string>
 	            <string>wtloginmqq2</string>
 	            <string>mqqopensdkapiV3</string>
@@ -59,6 +61,8 @@
         </info>
         <source-file src="src/ios/lib" weak="false" />
 
+        <!-- 云信 -->
+
         <!-- Other required frameworks -->
         <framework src="libz.tbd" />
         <framework src="libstdc++.tbd" />
@@ -68,10 +72,20 @@
         <framework src="ImageIO.framework" />
         <framework src="Security.framework" />
         <framework src="SystemConfiguration.framework" />
+        <framework src="CoreMotion.framework" />
         
-        <!-- 添加URL Type 需要用户自己修改 懒得弄... -->
+        <!-- 添加URL Type 需要用户自己修改 懒得弄...国内的很多平台的跳转id... -->
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>com.github.doctor</string>
+                    </array>
+                </dict>
+
                 <dict>
                     <key>CFBundleTypeRole</key>
                     <string>Editor</string>
