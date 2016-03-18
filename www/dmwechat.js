@@ -39,7 +39,7 @@ var dmwechat = {
         exec(success, error, "dmwechat", "login", [type]);
     },
 
-    // 接入支付
+    // 接入微信支付
     // var params = {
     //     mch_id: '10000100', // merchant id
     //     prepay_id: 'wx201411101639507cbf6ffd8b0779950874', // prepay id returned from server
@@ -51,7 +51,9 @@ var dmwechat = {
         exec(success, error, "dmwechat", "wechatPay", [params]);
     },
 
-    aliPay: function(params, success, error) {
+    // 接入支付宝支付，注意微信支付iOS上，还要去代码里边，还有xml里边，修改info type
+    // var params 
+    aliPay: function(param, success, error) {
         exec(success, error, "dmwechat", "aliPay", [params]);
     }
 
