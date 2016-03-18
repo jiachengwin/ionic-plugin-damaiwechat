@@ -49,71 +49,25 @@
         <source-file src="src/ios/dmwechat.m" />
 
         <!-- UMeng -->
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocial.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocialAccountManager.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocialBar.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocialConfig.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocialControllerService.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocialControllerServiceComment.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocialData.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocialDataService.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocialSnsData.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocialSnsPlatformManager.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_5.0/Header/UMSocialSnsService.h"/>
-
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/SocialSDKXib/UMSCommentDetailController.xib"/>
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/SocialSDKXib/UMSCommentInputController.xib"/>
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/SocialSDKXib/UMSCommentInputControlleriPad.xib"/>
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/SocialSDKXib/UMShareEditViewController.xib"/>
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/SocialSDKXib/UMShareEditViewControlleriPad.xib"/>
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/SocialSDKXib/UMSLoginViewController.xib"/>
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/SocialSDKXib/UMSShareListController.xib"/>
-
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/en.lproj" />
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/zh-Hans.lproj" />
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/UMSocialSDKResourcesNew.bundle" />
-        <source-file src="src/ios/lib/UMSocial_Sdk_5.0/libUMSocial_Sdk_5.0.a" framework="true" />
-        
-        <!--        WeChatSDK-->
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/UMSocialWechatHandler.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/WechatAuthSDK.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/WXApi.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/WXApiObject.h"/>
-
-        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/libSocialWechat.a" framework="true" />
-        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/WeChat/libWeChatSDK.a"/>
-        
-        <!--        SinaSSO-->
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/UMSocialSinaSSOHandler.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WBHttpRequest.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WBHttpRequest+WeiboGame.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WBHttpRequest+WeiboShare.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WBHttpRequest+WeiboToken.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WBHttpRequest+WeiboUser.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WBSDKBasicButton.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WBSDKCommentButton.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WBSDKRelationshipButton.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WeiboSDK.h"/>
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WeiboUser.h"/>
-
-        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/WeiboSDK.bundle"/>
-        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/libSocialSinaSSO.a" framework="true" />
-        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/SinaSSO/libWeiboSDK.a" framework="true" />
-        
-        <!--        TencentOpenAPI-->
-        <header-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/UMSocialQQHandler.h"/>
-
-        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenApi_IOS_Bundle.bundle"/>
-        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework" framework="true" />
-        <source-file src="src/ios/lib/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/libSocialQQ.a" framework="true" />
+        <info>
+                这里一开始，我是想所有文件手动写进来，添加的...写了好久...
+                然后，最后还是没有什么卵用...TM的...主要是，出现了一些奇奇怪怪的问题，也不想解决了...想到后面还要这样添加...
+                又回到原点，怎么样添加整个文件...尝试了很多方法....还是不行...
+                决定先放一下...需要用到这个插件的同学，自己手动添加....
+                或者有更好的方法...请一定告知我：qq.542136758...
+                https://cordova.apache.org/docs/en/4.0.0/plugin_ref/spec.html
+        </info>
+        <source-file src="src/ios/lib" weak="false" />
 
         <!-- Other required frameworks -->
-        <source-file src="src/ios/frame/CoreGraphics.framework" framework="true" />
-        <source-file src="src/ios/frame/CoreTelephony.framework" framework="true" />
-        <source-file src="src/ios/frame/ImageIO.framework" framework="true" />
-        <source-file src="src/ios/frame/Security.framework" framework="true" />
-        <source-file src="src/ios/frame/SystemConfiguration.framework" framework="true" />
-        <source-file src="src/ios/frame/libsqlite3.tbd" framework="true" />
+        <framework src="libz.tbd" />
+        <framework src="libstdc++.tbd" />
+        <framework src="libsqlite3.tbd" />
+        <framework src="CoreGraphics.framework" />
+        <framework src="CoreTelephony.framework" />
+        <framework src="ImageIO.framework" />
+        <framework src="Security.framework" />
+        <framework src="SystemConfiguration.framework" />
         
         <!-- 添加URL Type 需要用户自己修改 懒得弄... -->
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
