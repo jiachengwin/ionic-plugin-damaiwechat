@@ -5,6 +5,7 @@
 		<clobbers target="cordova.plugins.dmwechat" />
 	</js-module>
 
+    <!-- android平台 -->
 	<platform name="android">
 		<config-file parent="/*" target="res/xml/config.xml">
 			<feature name="dmwechat">
@@ -12,9 +13,99 @@
 			</feature>
 		</config-file>
 		<config-file parent="/*" target="AndroidManifest.xml" />
+
+        <!-- 添加权限 -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.READ_LOGS" />
+            <uses-permission android:name="android.permission.CALL_PHONE" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.GET_TASKS" />
+            <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+            <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+            <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+            <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+        </config-file>
+
+        <!-- 添加activity -->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <!-- 友盟 -->
+            <activity
+                android:name="com.umeng.socialize.editorpage.ShareActivity"
+                android:theme="@style/Theme.UMDefault"
+                android:excludeFromRecents="true" />
+            
+            <!-- 微信 -->
+            <activity
+                android:name="com.umeng.soexample.wxapi.WXEntryActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:exported="true"
+                android:screenOrientation="portrait"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+            <!-- 微博 -->
+            <activity
+                android:name=".WBShareActivity"
+                android:configChanges="keyboardHidden|orientation"
+                android:screenOrientation="portrait" >
+                <intent-filter>
+                    <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity> 
+            <activity
+                android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+                android:configChanges="keyboardHidden|orientation"
+                android:windowSoftInputMode="adjustResize"
+                android:exported="false" >
+            </activity>
+
+            <!-- QQ，Qzone -->
+            <activity
+              android:name="com.tencent.tauth.AuthActivity"
+              android:launchMode="singleTask"
+              android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+            </activity>
+            <activity          
+                android:name="com.tencent.connect.common.AssistActivity"
+                android:screenOrientation="portrait"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            <service 
+                android:name="com.sina.weibo.sdk.net.DownloadService"
+                android:exported="false">
+            </service>
+
+            <!-- 支付宝 -->
+            <activity
+                android:name=".apshare.ShareEntryActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:exported="true"
+                android:screenOrientation="portrait"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar" />      
+
+        </config-file>
+
+
+
+        <!-- Plugin source code -->
 		<source-file src="src/android/dmwechat.java" target-dir="src/com/damai/damaiwechat/dmwechat" />
+
+
 	</platform>
 
+    <!-- iOS平台 -->
 	<platform name="ios">
             <config-file parent="/*" target="config.xml">
                 <feature name="dmwechat"><param name="ios-package" value="dmwechat" /></feature>
@@ -50,15 +141,17 @@
         <!-- Plugin source code -->
         <source-file src="src/ios/dmwechat.m" />
 
-        <!-- UMeng -->
         <info>
-                注意：需要自己添加一下插件中的lib文件夹...还有修改info中的一些key值（自己配置）
-                这里一开始，我是想所有文件手动写进来，添加的...写了好久...
-                然后，最后还是没有什么卵用...TM的...主要是，出现了一些奇奇怪怪的问题，也不想解决了...想到后面还要这样添加...
-                又回到原点，怎么样添加整个文件...尝试了很多方法....还是不行...
-                决定先放一下...需要用到这个插件的同学，自己手动添加....
-                或者有更好的方法...请一定告知我：qq.542136758...
-                官网参考：https://cordova.apache.org/docs/en/4.0.0/plugin_ref/spec.html
+            注意：需要自己添加一下插件中的lib文件夹(即使用group引用，参与编译)...
+            貌似可以写脚本自动生成...
+            还有需要修改info中的一些key值（自己配置，分享用）...
+            这里一开始，我是想所有文件手动写进来，添加的...写了好久...
+            然后，最后还是没有什么卵用...TM的...主要是，出现了一些奇奇怪怪的问题，也不想解决了...想到后面还要这样添加...
+            写了满满的一页，想到还有其他的插件，还有Android版本,就很奔溃了...
+            又回到原点，怎么样添加整个文件...尝试了很多方法....还是不行...
+            决定先放一下...需要用到这个插件的同学，自己手动添加....
+            或者有更好的方法...请一定告知我：qq.542136758...
+            官网参考：https://cordova.apache.org/docs/en/4.0.0/plugin_ref/spec.html
         </info>
         <source-file src="src/ios/lib" weak="false" />
 

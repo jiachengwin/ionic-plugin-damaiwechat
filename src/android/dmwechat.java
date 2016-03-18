@@ -22,22 +22,12 @@ public class dmwechat extends CordovaPlugin {
         }
 
         // init
-        // var params = {
-        //     wechatKey : "wxa2e2ce8a3180bed1",
-        //     wechatSecret : "7395136f4dd56798032be054c681a97d",
-        //     sinaKey : "1399888483",
-        //     sinaSecret : "441ed24920f1800de4f0703848070f2d",
-        //     tecentKey : "1104851815",
-        //     tecentSecret : "X7FT5BmwiA5Y7nxp"
-        // }
         if (action.equals("init")) {
             this.init(args, callbackContext);
             return true;
         }
 
         // login
-        // type:wechat sina tecent
-        // return: args.access_token args.userid
         if (action.equals("login")) {
             String type = args.getString(0);
             this.login(type, callbackContext);
@@ -70,15 +60,80 @@ public class dmwechat extends CordovaPlugin {
     }
 
     // 初始化APPID KEY
-    private void init(JSONArray args, CallbackContext callbackContext) {
+    private void init(JSONObject args, CallbackContext callbackContext) {
         // 这里进行初始化处理
-
+        PlatformConfig.setWeixin(args.wechatKey, args.wechatSecret);
+        PlatformConfig.setSinaWeibo(args.sinaKey, args.sinaSecret);
+        PlatformConfig.setQQZone(args.tecentKey, args.tecentSecret); 
     }
 
     // 认证登录，目前需要接入微博，QQ，微信 type: sina wechat tecent
     private void login(String type, CallbackContext callbackContext) {
+        if (type == "sina") {
+            SHARE_MEDIA platform = SHARE_MEDIA.SINA; 
+        } else if (type == "tecent") {
 
+        } else if (type == "wechat") {
+
+        } else {
+            return；
+        }
+        mShareAPI.doOauthVerify(this, platform, umAuthListener)
     }
+
+    private UMAuthListener umAuthListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            Toast.makeText( getApplicationContext(), "Authorize succeed", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText( getApplicationContext(), "Authorize fail", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText( getApplicationContext(), "Authorize cancel", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    // 各大平台分享
+    private void share(JSONArray args, CallbackContext callbackContext) {
+
+        // 判断有没有type，有的话直接根据type来进行分享，没有的话，直接分享
+
+        final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
+                        {
+                            SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA,
+                            SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,SHARE_MEDIA.DOUBAN
+                        };
+                new ShareAction(this).setDisplayList( displaylist )
+                        .withText( "呵呵" )
+                        .withTitle("title")
+                        .withTargetUrl("http://www.baidu.com")
+                        .withMedia( image )
+                        .setListenerList(umShareListener,umShareListener)
+                        .setShareboardclickCallback(shareBoardlistener)
+                        .open();
+    }
+
+    new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(ShareActivity.this,platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(ShareActivity.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(ShareActivity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     // 接入支付
     private void wechatPay(JSONArray args, CallbackContext callbackContext) {
@@ -90,5 +145,6 @@ public class dmwechat extends CordovaPlugin {
     }
 
     // 云信
+
 
 }
