@@ -41,7 +41,7 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-// 目前只接入了三种平台的认证登陆
+// 目前只接入了三种平台的认证登陆，还是使用友盟的...其他平台也是一样...
 #define UMKey @"56ea4f1867e58e4242001361"
 - (void)init:(CDVInvokedUrlCommand*)command
 {
@@ -64,7 +64,7 @@
                                                  RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
         }
         
-        //    //设置分享到QQ空间的应用Id，和分享url 链接
+        // 设置分享到QQ空间的应用Id，和分享url 链接
         if (params[@"tecentKey"] && params[@"tecentSecret"]) {
             [UMSocialQQHandler setQQWithAppId:params[@"tecentKey"]
                                        appKey:params[@"tecentKey"]
@@ -79,6 +79,7 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+// 授权登录
 - (void)login:(CDVInvokedUrlCommand*)command
 {
     NSString* platformName = [command.arguments objectAtIndex:0];
@@ -121,6 +122,7 @@
     }
 }
 
+// 分享
 - (void)share:(CDVInvokedUrlCommand*)command
 {
     NSString* platformName = [command.arguments objectAtIndex:0];
@@ -162,9 +164,9 @@
     }
 }
 
+// 支付宝，支付宝需要添加修改配置APP info type
 - (void)aliPay:(CDVInvokedUrlCommand*)command
 {
-    // 支付宝，支付宝需要添加修改配置APP info type
     NSString* requestParams = [command.arguments objectAtIndex:0];
     NSString *appScheme = @"com.github.doctor";
     
@@ -181,9 +183,9 @@
 
 #pragma mark wechat pay delegate
 
+// 微信支付
 - (void)wechatPay:(CDVInvokedUrlCommand*)command
 {
-    // 微信支付
     NSDictionary* dict = [command.arguments objectAtIndex:0];
     PayReq* req             = [[PayReq alloc] init];
     req.partnerId           = [dict objectForKey:@"partnerid"];
@@ -196,6 +198,7 @@
     self.payCallBackId = command.callbackId;
 }
 
+// 微信回调
 - (void)onResp:(BaseResp *)resp {
     if ([resp isKindOfClass:[PayResp class]]) {
         if (self.payCallBackId) {
@@ -211,6 +214,8 @@
         }
     }
 }
+
+// 云信
 
 
 #pragma mark overwrite the openURL from ionic

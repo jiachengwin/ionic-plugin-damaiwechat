@@ -33,7 +33,7 @@ var dmwechat = {
     },
 
     // login 
-    // type:wechat sina tecent
+    // var type = :wechat sina tecent
     // return: args.access_token args.userid xxxx xxxx
     login: function(type, success, error) {
         exec(success, error, "dmwechat", "login", [type]);
@@ -52,9 +52,9 @@ var dmwechat = {
     },
 
     // 接入支付宝支付，注意微信支付iOS上，还要去代码里边，还有xml里边，修改info type
-    // var params 
+    // var param = ""
     aliPay: function(param, success, error) {
-        exec(success, error, "dmwechat", "aliPay", [params]);
+        exec(success, error, "dmwechat", "aliPay", [param]);
     }
 
     // 接入云信
