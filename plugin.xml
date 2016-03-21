@@ -97,11 +97,35 @@
 
         </config-file>
 
-
-
         <!-- Plugin source code -->
 		<source-file src="src/android/dmwechat.java" target-dir="src/com/damai/damaiwechat/dmwechat" />
 
+        <info>
+            *  注意：需要自己添加一下插件中的lib文件夹(即使用group引用，参与编译)...下周写个脚本
+            *　　　　　　　　┏┓　　　┏┓+ +
+            *　　　　　　　┏┛┻━━━┛┻┓ + +
+            *　　　　　　　┃　　　　　　　┃ 　
+            *　　　　　　　┃　　　━　　　┃ ++ + + +
+            *　　　　　　 ████━████ ┃+
+            *　　　　　　　┃　　　　　　　┃ +
+            *　　　　　　　┃　　　┻　　　┃
+            *　　　　　　　┃　　　　　　　┃ + +
+            *　　　　　　　┗━┓　　　┏━┛
+            *　　　　　　　　　┃　　　┃　　　　　　　　　　　
+            *　　　　　　　　　┃　　　┃ + + + +
+            *　　　　　　　　　┃　　　┃　　　　　
+            *　　　　　　　　　┃　　　┃ + 　　　　
+            *　　　　　　　　　┃　　　┃
+            *　　　　　　　　　┃　　　┃　　+　　　　　　　　　
+            *　　　　　　　　　┃　 　　┗━━━┓ + +
+            *　　　　　　　　　┃ 　　　　　　　┣┓
+            *　　　　　　　　　┃ 　　　　　　　┏┛
+            *　　　　　　　　　┗┓┓┏━┳┓┏┛ + + + +
+            *　　　　　　　　　　┃┫┫　┃┫┫
+            *　　　　　　　　　　┗┻┛　┗┻┛+ + + +
+            *       Code is far away from bug with the animal protecting　　　　　　
+        </info>
+        <source-file src="src/android/lib" weak="false" />
 
 	</platform>
 
