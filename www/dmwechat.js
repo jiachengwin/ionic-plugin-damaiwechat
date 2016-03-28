@@ -21,12 +21,13 @@ var dmwechat = {
     },
 
     // share
-    // type，使用默认样式，传空“”，else: sina wechat tencent
+    // type，使用默认样式，传空“”，else: sina tencent wx wx_circle
     // 其实这里，充分体现了一个APP作为网页的问题了，调用毕竟是硬伤...
     // var data = {
     //     "title" : "",
     //     "content" : "",
-    //     "imgUrl" : ""
+    //     "imgUrl" : "",
+    //     "targetUrl" : ""
     // }
     share: function(type, data, success, error) {
         exec(success, error, "dmwechat", "share", [type, data]);
@@ -57,7 +58,7 @@ var dmwechat = {
         exec(success, error, "dmwechat", "aliPay", [param]);
     }
 
-    // 接入云信
+    // 接入云信（准备另外一个插件）
 
 };
 
