@@ -141,7 +141,7 @@
                                            delegate:self];
     } else {
         // 直接调用制定分享平台
-        if ([platformName isEqualToString:@"wx_circle"]) {
+        if ([platformName isEqualToString:@"wechat"]) {
             platformName = @"wxsession";
         } else if ([platformName isEqualToString:@"tencent"]) {
             platformName = @"qq";

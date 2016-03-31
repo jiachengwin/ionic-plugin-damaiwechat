@@ -1,4 +1,4 @@
-package com.damai.damaiwechat;
+package com.kangbm.kbmapp.doctor.wxapi;
 
 
 import com.umeng.socialize.weixin.view.WXCallbackActivity;

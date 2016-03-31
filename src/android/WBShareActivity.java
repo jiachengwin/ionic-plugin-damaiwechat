@@ -1,4 +1,4 @@
-package com.damai.damaiwechat;
+package com.kangbm.kbmapp.doctor;
 
 import com.umeng.socialize.media.WBShareCallBackActivity;
 

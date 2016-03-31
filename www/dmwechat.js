@@ -7,7 +7,7 @@ var dmwechat = {
         exec(success, error, "dmwechat", "echo", [msg]);
     },
 
-    // 初始化APPID KEY 
+    // 初始化APPID KEY
     // var params = {
     //     wechatKey : "wxa2e2ce8a3180bed1",
     //     wechatSecret : "7395136f4dd56798032be054c681a97d",
@@ -21,7 +21,7 @@ var dmwechat = {
     },
 
     // share
-    // type，使用默认样式，传空“”，else: sina tencent wx wx_circle
+    // type，使用默认样式，传空“”，else: sina wx wx_circle qq qzone
     // 其实这里，充分体现了一个APP作为网页的问题了，调用毕竟是硬伤...
     // var data = {
     //     "title" : "",
@@ -33,7 +33,7 @@ var dmwechat = {
         exec(success, error, "dmwechat", "share", [type, data]);
     },
 
-    // login 
+    // login
     // var type = :wechat sina tecent
     // return: args.access_token args.userid xxxx xxxx
     login: function(type, success, error) {
@@ -42,11 +42,13 @@ var dmwechat = {
 
     // 接入微信支付
     // var params = {
-    //     mch_id: '10000100', // merchant id
-    //     prepay_id: 'wx201411101639507cbf6ffd8b0779950874', // prepay id returned from server
-    //     nonce: '1add1a30ac87aa2db72f57a2375d8fec', // nonce string returned from server
-    //     timestamp: '1439531364', // timestamp
-    //     sign: '0CB01533B8C1EF103065174F50BCA001', // signed string
+    //    "appId" : "wxd930ea5d5a258f4f",
+    //    "partnerId" : "10000100",
+    //    "prepayId" : "1101000000140415649af9fc314aa427",
+    //    "packageValue" : "Sign=WXPay",
+    //    "nonceStr" : "a462b76e7436e98e0ed6e13c64b4fd1c",
+    //    "timeStamp" : "1397527777",
+    //    "sign" : "582282D72DD2B03AD892830965F428CB16E7A256"
     // };
     wechatPay: function(params, success, error) {
         exec(success, error, "dmwechat", "wechatPay", [params]);
@@ -58,8 +60,7 @@ var dmwechat = {
         exec(success, error, "dmwechat", "aliPay", [param]);
     }
 
-    // 接入云信（准备另外一个插件）
-
 };
 
 window.dmwechat = dmwechat;
+

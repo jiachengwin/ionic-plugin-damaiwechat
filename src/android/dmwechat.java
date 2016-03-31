@@ -1,10 +1,16 @@
 package com.damai.damaiwechat;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.damai.damaiwechat.pay.PayManager;
+import com.damai.damaiwechat.pay.alipay.AlipayResultListener;
+import com.damai.damaiwechat.pay.wx.WXRequestData;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMAuthListener;
@@ -80,11 +86,28 @@ public class dmwechat extends CordovaPlugin {
     }
 
     // 输出测试
-    private void echo(String message, CallbackContext callbackContext) {
+    public void echo(String message, CallbackContext callbackContext) {
         if (message != null && message.length() > 0) {
             callbackContext.success(message);
         } else {
             callbackContext.error("Expected one non-empty string argument.");
+        }
+    }
+
+
+    public void echoError(String message, CallbackContext callbackContext) {
+        if (message != null && message.length() > 0) {
+            callbackContext.error(message);
+        } else {
+            callbackContext.error("Expected one non-empty string argument.");
+        }
+    }
+
+    public void echo(JSONObject message, CallbackContext callbackContext) {
+        if (message != null) {
+            callbackContext.success(message);
+        } else {
+            callbackContext.error("message is null.");
         }
     }
 
@@ -130,22 +153,36 @@ public class dmwechat extends CordovaPlugin {
     }
 
     private UMAuthListener umAuthListener = new UMAuthListener() {
+
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            //echo(data.toString(), mCallbackContext);
-            //Toast.makeText(cordova.getActivity(), "Authorize succeed", Toast.LENGTH_SHORT).show();
+            Log.e("-----------", platform.toString() + "----" + data.toString());
+            JSONObject jsonObject = new JSONObject();
+            try {
+                if (platform.equals(SHARE_MEDIA.SINA)) {
+                    jsonObject.put("wb_uid", data.get("uid"));
+                    jsonObject.put("access_token", data.get("access_token"));
+                } else if (platform.equals(SHARE_MEDIA.QQ)) {
+                    jsonObject.put("open_id", data.get("open_id"));
+                    jsonObject.put("access_token", data.get("access_token"));
+                } else if (platform.equals(SHARE_MEDIA.WEIXIN)) {
+                    jsonObject.put("code", data.get("access_token"));
+                }
+            } catch (JSONException e) {
+                echo("json parse error", mCallbackContext);
+                e.printStackTrace();
+            }
+            echo(jsonObject, mCallbackContext);
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            ///echo(t.toString() + "--" + action, mCallbackContext);
-            //Toast.makeText(cordova.getActivity(), "Authorize fail", Toast.LENGTH_SHORT).show();
+            echoError("登录失败", mCallbackContext);
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
-            //echo("--" + action, mCallbackContext);
-            //Toast.makeText(cordova.getActivity(), "Authorize cancel", Toast.LENGTH_SHORT).show();
+            echoError("取消登录", mCallbackContext);
         }
     };
 
@@ -243,17 +280,17 @@ public class dmwechat extends CordovaPlugin {
     UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            showToast("分享成功");
+            echo("分享成功", mCallbackContext);
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            showToast("分享失败");
+            echoError("分享失败", mCallbackContext);
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            showToast("取消分享");
+            echoError("取消分享", mCallbackContext);
         }
     };
 
@@ -277,18 +314,84 @@ public class dmwechat extends CordovaPlugin {
     }
 
 
+    private WxPayCallbackBroadCast mBroadCast;
+
     /**
      * 微信支付
      */
-    private void wechatPay(JSONArray args, CallbackContext callbackContext) {
+    private void wechatPay(JSONArray args, CallbackContext callbackContext) throws JSONException {
 
+        mBroadCast = new WxPayCallbackBroadCast();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.damaiapp.kbm.wxpay");
+        cordova.getActivity().registerReceiver(mBroadCast, intentFilter);
+
+        JSONObject jsonObject = args.getJSONObject(0);
+        final WXRequestData data = new WXRequestData();
+        data.mAppid = String.valueOf(jsonObject.get("appId"));
+        data.mNonceStr = String.valueOf(jsonObject.get("nonceStr"));
+        data.mPackage = String.valueOf(jsonObject.get("packageValue"));
+        data.mPartnerid = String.valueOf(jsonObject.get("partnerId"));
+        data.mPrepayid = String.valueOf(jsonObject.get("prepayId"));
+        data.mSign = String.valueOf(jsonObject.get("sign"));
+        data.mTimestamp = String.valueOf(jsonObject.get("timeStamp"));
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                PayManager.getInstance().wxPay(cordova.getActivity(), data);
+            }
+        });
     }
 
     /**
      * 支付宝支付
      */
-    private void aliPay(JSONArray args, CallbackContext callbackContext) {
+    private void aliPay(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        final String sign = args.getString(0);
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                PayManager.getInstance().aliPay(cordova.getActivity(), sign, new AlipayResultListener() {
 
+                    @Override
+                    public void onSuccess(String orderNo) {
+                        echo(orderNo, mCallbackContext);
+                    }
+
+                    @Override
+                    public void onFailed(String code) {
+                        echoError(code, mCallbackContext);
+                    }
+                });
+            }
+        });
+
+    }
+
+    public class WxPayCallbackBroadCast extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            int code = intent.getIntExtra("code", 0);
+            String msg = intent.getStringExtra("msg");
+            if (code == 0) {  // 0:支付成功，-2：取消支付   支付失败
+                echo("支付成功", mCallbackContext);
+            } else if (code == -2) {
+                echoError("取消支付 ", mCallbackContext);
+            } else {
+                echoError("支付失败", mCallbackContext);
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBroadCast != null) {
+            cordova.getActivity().unregisterReceiver(mBroadCast);
+        }
     }
 
     // 云信
