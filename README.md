@@ -22,4 +22,7 @@ Share title, description, image, and link to different plat(微信朋友圈,QQ,Q
 #### dmplugin.echo("Hellow World", function(){}, function(){});
 
 #More Interface By Read:
-### https://github.com/wfxiaolong/ionic-plugin-damaiwechat/blob/master/www/dmwechat.js
+https://github.com/wfxiaolong/ionic-plugin-damaiwechat/blob/master/www/dmwechat.js
+
+#LICENSE:
+<a href="https://opensource.org/licenses/MIT">MIT</a>
