@@ -30,5 +30,8 @@ dmplugin.echo("Hellow World", function(){
 #More Interface By Read:
 https://github.com/wfxiaolong/ionic-plugin-damaiwechat/blob/master/www/dmwechat.js
 
+#Result:
+<img src="https://github.com/wfxiaolong/ionic-plugin-damaiwechat/blob/master/social-demo.png">
+
 #LICENSE:
 <a href="https://opensource.org/licenses/MIT">MIT</a>
