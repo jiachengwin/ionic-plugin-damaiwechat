@@ -8,7 +8,7 @@ Share title, description, image, and link to different plat(微信朋友圈,QQ,Q
 
 # Install
 
-1. ```cordova plugin add git@github.com:wfxiaolong/ionic-plugin-damaiwechat.git
+1. cordova plugin add https://github.com/wfxiaolong/ionic-plugin-damaiwechat.git
 
 2. change many files by read :https://github.com/wfxiaolong/ionic-plugin-damaiwechat/blob/master/attention.txt
 
