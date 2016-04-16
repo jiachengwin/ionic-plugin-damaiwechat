@@ -18,8 +18,14 @@ Share title, description, image, and link to different plat(微信朋友圈,QQ,Q
 
 # Usage in ionic:
 
-#### var dmplugin = window.dmwechat
-#### dmplugin.echo("Hellow World", function(){}, function(){});
+var dmplugin = window.dmwechat
+dmplugin.echo("Hellow World", function(){
+    // Todo
+
+}, function(){
+    // Todo
+
+});
 
 #More Interface By Read:
 https://github.com/wfxiaolong/ionic-plugin-damaiwechat/blob/master/www/dmwechat.js
