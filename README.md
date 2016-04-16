@@ -27,7 +27,7 @@ dmplugin.echo("Hellow World", function(){
 
 });
 
-#More Interface By Read:
+More Interface By Read:
 https://github.com/wfxiaolong/ionic-plugin-damaiwechat/blob/master/www/dmwechat.js
 
 #Result:
