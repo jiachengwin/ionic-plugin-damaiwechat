@@ -84,35 +84,32 @@
 {
     NSString* platformName = [command.arguments objectAtIndex:0];
     if ([platformName isEqualToString:@"wechat"]) {
-        platformName = @"wxsession";
+        platformName = UMShareToWechatSession;
     } else if ([platformName isEqualToString:@"tencent"]) {
-        platformName = @"qq";
+        platformName = UMShareToQQ;
     } else if ([platformName isEqualToString:@"sina"]) {
-        platformName = @"sina";
+        platformName = UMShareToSina;
     } else {
         platformName = @"";
     }
     if (![platformName isEqualToString:@""]) {
         [UMSocialControllerService defaultControllerService].socialUIDelegate = self;
         UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:platformName];
+        if (snsPlatform == nil) {
+            [[[UIAlertView alloc] initWithTitle:@"提示" message:@"获取参数错误了, 可能未初始化..." delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+            return;
+        }
         snsPlatform.loginClickHandler(self.viewController, [UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
             // 获取微博用户名、uid、token等
             if (response.responseCode == UMSResponseCodeSuccess) {
                 UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:platformName];
                 NSDictionary *res = @{@"access_token":snsAccount.accessToken,
-                        @"userid":snsAccount.usid,
+                        @"open_id":snsAccount.usid,
                         @"username":snsAccount.userName,
-                        @"icon":snsAccount.iconURL};
+                        @"icon":snsAccount.iconURL,
+                        @"data":snsAccount};
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:res];
                 [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-            }
-            // 这里可以获取到腾讯微博openid,Qzone的token等
-            if ([platformName isEqualToString:UMShareToTencent]) {
-                [[UMSocialDataService defaultDataService] requestSnsInformation:UMShareToTencent completion:^(UMSocialResponseEntity *respose){
-                    NSDictionary *res = @{@"access_token": response};
-                    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:res];
-                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-                }];
             }
         });
         
@@ -141,13 +138,15 @@
                                            delegate:self];
     } else {
         // 直接调用制定分享平台
-        if ([platformName isEqualToString:@"wechat"]) {
-            platformName = @"wxsession";
+        if ([platformName isEqualToString:@"wx_circle"]) {
+            platformName = UMShareToWechatSession;
         } else if ([platformName isEqualToString:@"tencent"]) {
-            platformName = @"qq";
+            platformName = UMShareToQQ;
         } else if ([platformName isEqualToString:@"sina"]) {
-            platformName = @"sina";
-        } else {
+            platformName = UMShareToSina;
+        } else if ([platformName isEqualToString:@"wx"]) {
+            platformName = UMShareToWechatTimeline;
+        }else {
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"选择平台出错了"];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
             return;
@@ -168,14 +167,14 @@
 - (void)aliPay:(CDVInvokedUrlCommand*)command
 {
     NSString* requestParams = [command.arguments objectAtIndex:0];
-    NSString *appScheme = @"com.github.doctor";
+    NSString *appScheme = @"com.github.kangbm.client";
     
     [[AlipaySDK defaultService] payOrder:requestParams fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-        if ([resultDic[@"result"] componentsSeparatedByString:@"TRADE_SUCCESS"].count > 1) {
+        if ([resultDic[@"result"] componentsSeparatedByString:@"TRADE_SUCCESS"].count > 1 || [resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"支付成功了"];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         } else {
-            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:resultDic];
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@"尝试支付失败了"];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }
     }];
@@ -188,11 +187,11 @@
 {
     NSDictionary* dict = [command.arguments objectAtIndex:0];
     PayReq* req             = [[PayReq alloc] init];
-    req.partnerId           = [dict objectForKey:@"partnerid"];
-    req.prepayId            = [dict objectForKey:@"prepayid"];
-    req.nonceStr            = [dict objectForKey:@"noncestr"];
-    req.timeStamp           = [[dict objectForKey:@"timestamp"] intValue];
-    req.package             = [dict objectForKey:@"package"];
+    req.partnerId           = [dict objectForKey:@"partnerId"];
+    req.prepayId            = [dict objectForKey:@"prepayId"];
+    req.nonceStr            = [dict objectForKey:@"nonceStr"];
+    req.timeStamp           = [[dict objectForKey:@"timeStamp"] intValue];
+    req.package             = [dict objectForKey:@"packageValue"];
     req.sign                = [dict objectForKey:@"sign"];
     [WXApi sendReq:req];
     self.payCallBackId = command.callbackId;

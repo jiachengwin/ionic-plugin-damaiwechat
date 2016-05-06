@@ -1,40 +1,40 @@
-//-------------------Ö§¸¶×¢ÒâÊÂÏî-----------------------------
+//-------------------æ”¯ä»˜æ³¨æ„äº‹é¡¹-----------------------------
 
-1¡¢  ĞŞ¸ÄWXEntryActivity.javaµÄpackageÃû
+1ã€  ä¿®æ”¹WXEntryActivity.javaçš„packageå
 
-2¡¢  ĞŞ¸ÄWXPayEntryActivityµÄpackageÃû
+2ã€  ä¿®æ”¹WXPayEntryActivityçš„packageå
 
-3¡¢  ĞŞ¸Äplugin.xml°üÖĞµÄÂ·¾¶WXEntryActivity.javaºÍWXPayEntryActivity.java µÄ  <config-file -activity -Â·¾¶
-	eg£ºÓ¦ÓÃ°üÃû+.wxapi.WXEntryActivity   and  Ó¦ÓÃ°üÃû+.wxapi.WXEntryActivity
-
-
-4¡¢  ĞŞ¸Äplugin.xml°üÖĞµÄÂ·¾¶WBShareActivity.java <config-file -activity -Â·¾¶
+3ã€  ä¿®æ”¹plugin.xmlåŒ…ä¸­çš„è·¯å¾„WXEntryActivity.javaå’ŒWXPayEntryActivity.java çš„  <config-file -activity -è·¯å¾„
+	egï¼šåº”ç”¨åŒ…å+.wxapi.WXEntryActivity   and  åº”ç”¨åŒ…å+.wxapi.WXEntryActivity
 
 
-5¡¢ ĞŞ¸Ä WXEntryActivity  WXPayEntryActivity  WBShareActivity µÄÓ³ÉäÎÄ¼ş <source-file src 
-	eg£º<source-file src="src/android/WXEntryActivity.java" 				target-dir="src/com/kangbm/kbmapp/doctor/wxapi" />
+4ã€  ä¿®æ”¹plugin.xmlåŒ…ä¸­çš„è·¯å¾„WBShareActivity.java <config-file -activity -è·¯å¾„
 
 
-6¡¢ĞŞ¸ÄWXPayEntryActivity.javaÎÄ¼şÖĞµÄRÎÄ¼ş  
-	¸ñÊ½£º°üÃû+.R
-	eg£ºimport com.kangbm.kbmapp.doctor.R;
+5ã€ ä¿®æ”¹ WXEntryActivity  WXPayEntryActivity  WBShareActivity çš„æ˜ å°„æ–‡ä»¶ <source-file src 
+	egï¼š<source-file src="src/android/WXEntryActivity.java" 				target-dir="src/com/kangbm/kbmapp/doctor/wxapi" />
 
 
-//-------------------µÇÂ¼·ÖÏíÊÂÏî-----------------------------
-
-1¡¢Î¢²©ºóÌ¨ÅäÖÃ×¢ÒâÊÂÏî °üÃû+Ç©Ãû
-
-ĞÂÀËµÇÂ¼»Øµ÷key £ºwb_uid  ¡¢ access_token
+6ã€ä¿®æ”¹WXPayEntryActivity.javaæ–‡ä»¶ä¸­çš„Ræ–‡ä»¶  
+	æ ¼å¼ï¼šåŒ…å+.R
+	egï¼šimport com.kangbm.kbmapp.doctor.R;
 
 
-2¡¢Î¢ĞÅºóÌ¨ÅäÖÃ×¢ÒâÊÂÏî °üÃû+Ç©Ãû
-	»Øµ÷key £ºcode
+//-------------------ç™»å½•åˆ†äº«äº‹é¡¹-----------------------------
 
-3¡¢qqºóÌ¨ÅäÖÃ×¢ÒâÊÂÏî °üÃû+Ç©Ãû
-  »Øµ÷key £ºopen_id   ¡¢ access_token
+1ã€å¾®åšåå°é…ç½®æ³¨æ„äº‹é¡¹ åŒ…å+ç­¾å
 
-4¡¢ĞŞ¸Äplugin.xmlµÄscheme
-		¸ñÊ½Îª£ºtencent + app_id
+æ–°æµªç™»å½•å›è°ƒkey ï¼šwb_uid  ã€ access_token
+
+
+2ã€å¾®ä¿¡åå°é…ç½®æ³¨æ„äº‹é¡¹ åŒ…å+ç­¾å
+	å›è°ƒkey ï¼šcode
+
+3ã€qqåå°é…ç½®æ³¨æ„äº‹é¡¹ åŒ…å+ç­¾å
+  å›è°ƒkey ï¼šopen_id   ã€ access_token
+
+4ã€ä¿®æ”¹plugin.xmlçš„scheme
+		æ ¼å¼ä¸ºï¼štencent + app_id
 	  <data android:scheme="tencent100424468" />  
 
  

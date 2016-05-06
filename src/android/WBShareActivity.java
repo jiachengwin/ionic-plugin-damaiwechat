@@ -1,4 +1,4 @@
-package com.kangbm.kbmapp.doctor;
+package com.kangbm.kbmapp.client;
 
 import com.umeng.socialize.media.WBShareCallBackActivity;
 

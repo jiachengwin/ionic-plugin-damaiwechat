@@ -34,11 +34,19 @@ var dmwechat = {
     },
 
     // login
-    // var type = :wechat sina tecent
-    // return: args.access_token args.userid xxxx xxxx
+    // var type = :wechat sina tencent
+    // return: 
+    // {
+    //     "access_token":"",
+    //     "open_id":"",
+    //     "username":"",
+    //     "icon":"",
+    //     "data":"all data"
+    // }
     login: function(type, success, error) {
         exec(success, error, "dmwechat", "login", [type]);
     },
+
 
     // 接入微信支付
     // var params = {

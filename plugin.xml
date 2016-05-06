@@ -47,7 +47,7 @@
             
             <!-- 微信 -->
             <activity
-                android:name="com.kangbm.kbmapp.doctor.wxapi.WXEntryActivity"
+                android:name="com.kangbm.kbmapp.client.wxapi.WXEntryActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:exported="true"
                 android:screenOrientation="portrait"
@@ -55,7 +55,7 @@
 
             <!-- 微博 -->
             <activity
-                android:name="com.kangbm.kbmapp.doctor.WBShareActivity"
+                android:name="com.kangbm.kbmapp.client.WBShareActivity"
                 android:configChanges="keyboardHidden|orientation"
                 android:screenOrientation="portrait" >
                 <intent-filter>
@@ -92,7 +92,7 @@
                 android:theme="@android:style/Theme.Translucent.NoTitleBar" />  
 			<!-- 微信支付-->
 			<activity
-				android:name="com.kangbm.kbmapp.doctor.wxapi.WXPayEntryActivity"
+				android:name="com.kangbm.kbmapp.client.wxapi.WXPayEntryActivity"
 				android:exported="true"
 				android:launchMode="singleTop" />
 			<!-- 支付宝网页支付-->	
@@ -139,9 +139,9 @@
 		<source-file src="src/android/dmwechat.java" target-dir="src/com/damai/damaiwechat" />
 		<!--<source-file src="src/android/WBShareActivity.java" target-dir="src/com/damai/damaiwechat" />-->
 		<!--<source-file src="src/android/WXEntryActivity.java" target-dir="src/com/kangbm/kbmapp/doctor/wxapi" />-->
-		<source-file src="src/android/WXEntryActivity.java" target-dir="src/com/kangbm/kbmapp/doctor/wxapi" />
-		<source-file src="src/android/WXPayEntryActivity.java" target-dir="src/com/kangbm/kbmapp/doctor/wxapi" />
-		<source-file src="src/android/WBShareActivity.java" target-dir="src/com/kangbm/kbmapp/doctor" />
+		<source-file src="src/android/WXEntryActivity.java" target-dir="src/com/kangbm/kbmapp/client/wxapi" />
+		<source-file src="src/android/WXPayEntryActivity.java" target-dir="src/com/kangbm/kbmapp/client/wxapi" />
+		<source-file src="src/android/WBShareActivity.java" target-dir="src/com/kangbm/kbmapp/client" />
 		
 		<!-- pay -->
 		<source-file src="src/android/pay/PayManager.java" target-dir="src/com/damai/damaiwechat/pay" />
@@ -369,7 +369,7 @@
         <framework src="SystemConfiguration.framework" />
         <framework src="CoreMotion.framework" />
         
-        <!-- 添加URL Type 需要用户自己修改 懒得弄...国内的很多平台的跳转id... -->
+        <!-- 添加URL Type 需要用户自己修改 懒得弄...国内的很多平台的跳转id... 还要修改.m文件下的支付包配置-->
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
                 <dict>
@@ -377,7 +377,7 @@
                     <string>Editor</string>
                     <key>CFBundleURLSchemes</key>
                     <array>
-                        <string>com.github.doctor</string>
+                        <string>com.github.kangbm.client</string>
                     </array>
                 </dict>
 
@@ -395,7 +395,7 @@
                     <string>Editor</string>
                     <key>CFBundleURLSchemes</key>
                     <array>
-                        <string>QQ41DAB367</string>
+                        <string>QQ41E1D32A</string>
                     </array>
                 </dict>
                 <dict>
@@ -403,7 +403,7 @@
                     <string>Editor</string>
                     <key>CFBundleURLSchemes</key>
                     <array>
-                        <string>tencent1104851815</string>
+                        <string>tencent1105318698</string>
                     </array>
                 </dict>
                 <dict>

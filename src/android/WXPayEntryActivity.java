@@ -1,11 +1,11 @@
-package com.kangbm.kbmapp.doctor.wxapi;
+package com.kangbm.kbmapp.client.wxapi;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.damai.damaiwechat.pay.wx.Constants;
-import com.kangbm.kbmapp.doctor.R;
+import com.kangbm.kbmapp.client.R;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelpay.PayResp;

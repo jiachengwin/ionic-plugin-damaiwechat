@@ -1,4 +1,4 @@
-package com.kangbm.kbmapp.doctor.wxapi;
+package com.kangbm.kbmapp.client.wxapi;
 
 
 import com.umeng.socialize.weixin.view.WXCallbackActivity;
