@@ -53,7 +53,7 @@
         
         //设置微信AppId，设置分享url，默认使用友盟的网址
         if (params[@"wechatKey"] && params[@"wechatSecret"]) {
-            [UMSocialWechatHandler setWXAppId:params[@"wechatKey"] appSecret:params[@"wechatSecret"] url:@"https://damaiapp.com/"];
+            [UMSocialWechatHandler setWXAppId:params[@"wechatKey"] appSecret:params[@"wechatSecret"] url:@"http://c.damaiplus.com/kangbaomu/wechat/www/?/goods"];
         }
         
         // 打开新浪微博的SSO开关
@@ -61,14 +61,14 @@
         if (params[@"sinaKey"] && params[@"sinaSecret"]) {
             [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:params[@"sinaKey"]
                                                       secret:params[@"sinaSecret"]
-                                                 RedirectURL:@"https://damaiapp.com/"];
+                                                 RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
         }
         
         // 设置分享到QQ空间的应用Id，和分享url 链接
         if (params[@"tecentKey"] && params[@"tecentSecret"]) {
             [UMSocialQQHandler setQQWithAppId:params[@"tecentKey"]
                                        appKey:params[@"tecentKey"]
-                                          url:@"https://damaiapp.com/"];
+                                          url:@"http://www.umeng.com/social"];
             [UMSocialQQHandler setSupportWebView:YES];
         }
 
@@ -125,11 +125,7 @@
     NSDictionary* data = [command.arguments objectAtIndex:1];
     
     NSString *shareText = data[@"content"];
-    if([shareText isEqualToString:@""]) {
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"没有填写分享文案"];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-        return;
-    };
+    if([shareText isEqualToString:@""])shareText = @"来自康宝母分享";
     NSURL *url = [NSURL URLWithString:data[@"imgUrl"]];
     UIImage *shareImage = [UIImage imageWithData: [NSData dataWithContentsOfURL:url]];
     if ([platformName isEqualToString:@""]) {
@@ -156,6 +152,7 @@
             return;
         }
         [UMSocialData defaultData].extConfig.wechatSessionData.url = data[@"targetUrl"];    // md这个是个坑....所谓的优先级....
+        [UMSocialData defaultData].extConfig.wechatSessionData.title = data[@"title"];    // md这个是个坑....所谓的优先级....
         [[UMSocialDataService defaultDataService] postSNSWithTypes:@[platformName] content:shareText image:shareImage location:nil urlResource:nil presentedController:self.viewController completion:^(UMSocialResponseEntity * response){
             if (response.responseCode == UMSResponseCodeSuccess) {
                 CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"分享成功了"];
@@ -172,7 +169,7 @@
 - (void)aliPay:(CDVInvokedUrlCommand*)command
 {
     NSString* requestParams = [command.arguments objectAtIndex:0];
-    NSString *appScheme = @"com.github.kangbm.client";              //每个应用集成的时候都要查看...
+    NSString *appScheme = @"com.github.kangbm.client";
     
     [[AlipaySDK defaultService] payOrder:requestParams fromScheme:appScheme callback:^(NSDictionary *resultDic) {
         if ([resultDic[@"result"] componentsSeparatedByString:@"TRADE_SUCCESS"].count > 1 || [resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
