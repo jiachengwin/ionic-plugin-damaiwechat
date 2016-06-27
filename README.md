@@ -6,7 +6,7 @@ A cordova plugin, a JS version of Alipay, Wechat Pay, Umeng share SDK
 
 Share title, description, image, and link to different plat(微信朋友圈,QQ,QZone,Sina...)
 
-# Install
+# Install Follows
 
 1. cordova plugin add https://github.com/wfxiaolong/ionic-plugin-damaiwechat.git
 
@@ -26,6 +26,11 @@ dmplugin.echo("Hellow World", function(){
     // Todo
 
 });
+
+dmplugin.pay();
+dmplugin.init();
+dmplugin.share();
+dmplugin.login();
 
 More Interface By Read:
 https://github.com/wfxiaolong/ionic-plugin-damaiwechat/blob/master/www/dmwechat.js
