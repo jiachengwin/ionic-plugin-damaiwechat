@@ -32,23 +32,23 @@ public class AlipayUtil {
 
 				// 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
 				if (TextUtils.equals(resultStatus, "9000")) {
-					String tradeNo = "";
-
-					try {
-						String tradeNoPat = "out_trade_no=\"";
-						int tradeNoStart = resultInfo.indexOf(tradeNoPat);
-						if(tradeNoStart >= 0) {
-							String ret1 = resultInfo.substring(tradeNoStart + tradeNoPat.length());
-							int end = ret1.indexOf("\"");
-							tradeNo = ret1.substring(0, end);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						tradeNo = "";
-					}
+//					String tradeNo = "";
+//
+//					try {
+//						String tradeNoPat = "out_trade_no=\"";
+//						int tradeNoStart = resultInfo.indexOf(tradeNoPat);
+//						if(tradeNoStart >= 0) {
+//							String ret1 = resultInfo.substring(tradeNoStart + tradeNoPat.length());
+//							int end = ret1.indexOf("\"");
+//							tradeNo = ret1.substring(0, end);
+//						}
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//						tradeNo = "";
+//					}
 
 					if (mListener != null) {
-						mListener.onSuccess(tradeNo);
+						mListener.onSuccess("支付成功");
 					}
 					//Toast.makeText(mActivity, "支付成功", Toast.LENGTH_SHORT).show();
 					//Toaster.toast("支付成功");
@@ -62,6 +62,7 @@ public class AlipayUtil {
 						// 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
 						//Toast.makeText(mActivity, "支付失败: "+payResult.getMemo(), Toast.LENGTH_SHORT).show();
 						//Toaster.toast("支付失败: "+payResult.getMemo());
+						mListener.onFailed("支付失败");
 					}
 				}
 				break;

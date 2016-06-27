@@ -147,6 +147,7 @@ public class dmwechat extends CordovaPlugin {
                 } else {
                     return;
                 }
+				cordova.setActivityResultCallback(dmwechat.this);
                 mShareAPI.doOauthVerify(cordova.getActivity(), platform, umAuthListener);
             }
         });
@@ -156,17 +157,18 @@ public class dmwechat extends CordovaPlugin {
 
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            Log.e("-----------", platform.toString() + "----" + data.toString());
+            //Log.e("-----------", platform.toString() + "----" + data.toString());
             JSONObject jsonObject = new JSONObject();
             try {
                 if (platform.equals(SHARE_MEDIA.SINA)) {
-                    jsonObject.put("wb_uid", data.get("uid"));
+                    jsonObject.put("open_id", data.get("uid"));
                     jsonObject.put("access_token", data.get("access_token"));
                 } else if (platform.equals(SHARE_MEDIA.QQ)) {
-                    jsonObject.put("open_id", data.get("open_id"));
+                    jsonObject.put("open_id", data.get("openid"));
                     jsonObject.put("access_token", data.get("access_token"));
                 } else if (platform.equals(SHARE_MEDIA.WEIXIN)) {
-                    jsonObject.put("code", data.get("access_token"));
+                    jsonObject.put("open_id", data.get("openid"));
+                    jsonObject.put("access_token", data.get("access_token"));
                 }
             } catch (JSONException e) {
                 echo("json parse error", mCallbackContext);
@@ -205,7 +207,7 @@ public class dmwechat extends CordovaPlugin {
             final String imgUrl = String.valueOf(jsonObject.get("imgUrl"));
             final String targetUrl = String.valueOf(jsonObject.get("targetUrl"));
 
-            if (TextUtils.isEmpty(type)) {
+            if (!TextUtils.isEmpty(type)) {
                 cordova.getActivity().runOnUiThread(new Runnable() {
 
                     @Override
@@ -230,7 +232,7 @@ public class dmwechat extends CordovaPlugin {
                                 .withTitle(title)
                                 .withText(content)
                                 .withMedia(image);
-                        if (TextUtils.isEmpty(targetUrl))
+                        if (!TextUtils.isEmpty(targetUrl))
                             shareAction.withTargetUrl(targetUrl);
                         shareAction
                                 .share();
@@ -253,7 +255,7 @@ public class dmwechat extends CordovaPlugin {
                                 .withTitle(title)
                                 .withText(content)
                                 .withMedia(image);
-                        if (TextUtils.isEmpty(targetUrl))
+                        if (!TextUtils.isEmpty(targetUrl))
                             shareAction.withTargetUrl(targetUrl);
                         //.setShareboardclickCallback(shareBoardlistener)
                         shareAction.open();

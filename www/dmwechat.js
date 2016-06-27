@@ -40,8 +40,7 @@ var dmwechat = {
     //     "access_token":"",
     //     "open_id":"",
     //     "username":"",
-    //     "icon":"",
-    //     "data":"all data"
+    //     "icon":""
     // }
     login: function(type, success, error) {
         exec(success, error, "dmwechat", "login", [type]);
